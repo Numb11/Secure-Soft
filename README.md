@@ -7,7 +7,7 @@ o Terry Omorowa <br>
 o Joe Lyons <br>
 o Tom Walker <br>
 
-**Initial Idea** - Social Media site <br>
+**Initial Idea** - Social Media Site <br>
 
 # Requirements
 
