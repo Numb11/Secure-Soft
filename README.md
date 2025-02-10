@@ -1,7 +1,7 @@
 # Secure-Software Development Project
 Secure Software development group project 5218COMP <br>
 
-**Members : ** <br>
+**Members:** <br>
 o Louis Gould <br>
 o Terry Omorowa <br>
 o Joe Lyons <br>
