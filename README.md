@@ -11,6 +11,9 @@ o Tom Walker <br>
 
 **Initial Idea** - Social Media Site <br>
 
+**Styles** - Camelcase, inline
+
+
 # Requirements
 
 **Have at least FOUR different functionalities that you can add security to such as:** <br>
