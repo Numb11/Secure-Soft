@@ -22,4 +22,15 @@ o Search functionality <br>
 o Sending PHP email with one time authentication tokens (forgotten username or password resets) <br>
 o ... or any other features you wish to implement. <br>
 
+**Main questions**
+
+• What are the assets that must be protected?
+• What could wrong? And how?
+• What are the capabilities that adversaries have?
+• What is the impact of a successful attack? And how to mitigate it?
+• Remember bad threat modelling = bad security!
+
+
+**Banned Functions**
+![image](https://github.com/user-attachments/assets/d34ddcbc-e5fb-4bec-89e2-7508ca461bb8)
 
