@@ -32,5 +32,6 @@ o ... or any other features you wish to implement. <br>
 
 
 **Banned Functions**
+<br>
 ![image](https://github.com/user-attachments/assets/d34ddcbc-e5fb-4bec-89e2-7508ca461bb8)
 
