@@ -2,6 +2,7 @@
 <html>
     
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 
 <head>
@@ -41,6 +42,9 @@
     ?>
 =======
 
+=======
+
+>>>>>>> Stashed changes
 
 <head>
 <title> FakeBook </title>
@@ -74,6 +78,9 @@
 
         <label> <a href="signup.html">Sign-up here</a> </label>
     </div>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 </body>
