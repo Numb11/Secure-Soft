@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 
 
     // Prevent Brute Force through attempt limit, could IP ban
@@ -44,6 +45,20 @@
     $password = $_POST["password"];
 
     validateCred($username, $password)
+=======
+<<<<<<< Updated upstream
+    $email = $_POST['username'];
+    $password = $_POST['password'];
+
+    echo $email
+    echo $password
+=======
+    $email = $_POST["username"];
+    $password = $_POST["password"];
+
+    echo "password and username entered :)"
+>>>>>>> Stashed changes
+>>>>>>> 36077c83f4180679ddd38095a9405467621cdb25
 
 
 
@@ -58,4 +73,12 @@
 
 
 
+<<<<<<< HEAD
 ?>
+=======
+<<<<<<< Updated upstream
+>
+=======
+?>
+>>>>>>> Stashed changes
+>>>>>>> 36077c83f4180679ddd38095a9405467621cdb25
