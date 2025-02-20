@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html>
     
-<<<<<<< HEAD
 
-=======
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
 
 <head>
@@ -44,15 +39,6 @@
     <?php
         
     ?>
-=======
-
-=======
-
->>>>>>> Stashed changes
-=======
-
->>>>>>> Stashed changes
->>>>>>> 36077c83f4180679ddd38095a9405467621cdb25
 
 <head>
 <title> FakeBook </title>
@@ -65,24 +51,18 @@
     <div class = "logInForm">
         <form action="verifyUser.php" method = "POST">
             <label for="username">Username:</label><br>
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
+
             <input type="email" placeholder = "Enter Email" name="username"><br>
 
             <label for="password">Password: :</label><br>
             <input type="password" placeholder = "Enter Password"  name="password">
         </form>
-=======
->>>>>>> 36077c83f4180679ddd38095a9405467621cdb25
+
             <input type="text" placeholder = "Enter Username" name="username" required><br>
 
             <label for="password">Password: :</label><br>
             <input type="password" placeholder = "Enter Password"  name="password" required>
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
->>>>>>> 36077c83f4180679ddd38095a9405467621cdb25
+
 
         <br>
 
@@ -98,26 +78,14 @@
         <br></br>
 
         <label> <a href="signup.html">Sign-up here</a> </label>
-<<<<<<< HEAD
 
         <br></br>
 
         </form>
 
-        
-    </div>
-=======
-<<<<<<< Updated upstream
-    </div>
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
         </form>
     </div>
->>>>>>> Stashed changes
->>>>>>> 36077c83f4180679ddd38095a9405467621cdb25
+
 
 </body>
 </html>
