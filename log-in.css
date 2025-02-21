@@ -1,19 +1,5 @@
-body {
-    justify-content: center;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    text-align: center;
-}
-
-.logInForm {
-    display: inline-block;
-    width: 300px;
-
-}
-
 #bannerText {
-    margin-right: 30px;
-
-
+    color: blue;
+    font-size: 24px;
+    text-align: center;
 }
