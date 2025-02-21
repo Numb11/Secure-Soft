@@ -33,7 +33,7 @@
 
         <br></br>
 
-        <label> <a href="signup.html">Sign-up here</a> </label>
+        <label> <a href="signup.php">Sign-up here</a> </label>
 
         <br></br>
 

@@ -72,5 +72,3 @@
     validateCred($username, $password);
 
 ?>
-
-
