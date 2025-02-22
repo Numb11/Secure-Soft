@@ -9,9 +9,10 @@
 </head>
 
 <body>
-    <h1 id = "bannerText">Connection made easier </h1>
-    <div class = "logInForm">
-        <form action="verifyUser.php" method = "POST">
+<h1 id = "bannerText">FakeBook</h1>
+    <p id = "bannerText">A *secure* direct messaging client...</p>
+    <div class = "logInFormArea">
+        <form id = "logInForm" action="verifyUser.php" method = "POST">
             <label for="username">Username:</label><br>
 
             <input type="text" placeholder = "Enter Username" name="username" required><br>
@@ -22,14 +23,14 @@
 
         <br>
 
-        <button type = "submit">Login</button>
-
         <label>
                 <input type="checkbox" checked="checked" name="remember">
                 Remember me  
         </label>
 
-    
+        <br></br>
+
+        <button type = "submit">Login</button>
 
         <br></br>
 

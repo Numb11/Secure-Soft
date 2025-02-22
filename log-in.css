@@ -1,5 +1,49 @@
-#bannerText {
-    color: blue;
-    font-size: 24px;
+body{
     text-align: center;
+
+
+}
+
+.logInFormArea{
+    max-width : 600px;
+    margin: auto;
+    padding: 20px;
+    padding-bottom: 30px;
+    background-color: rgb(193, 193, 193);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    display: inline-block;
+    text-align:center;
+    border-radius: 5px;
+    
+
+}
+
+.logInFormArea:hover {
+    transform: scale(1.1);
+
+
+}
+
+.logInForm{
+    align-self:center;
+    text-decoration: inherit;
+    color: black;
+    font-weight: 5px;
+
+}
+.logInForm,button{
+    width:100%;
+    border-radius: 5px;
+    outline: none;
+
+}
+
+.logInForm,button,input{
+    width:100%;
+    border-radius: 1px;
+}
+
+a{
+    text-decoration: inherit;
+
 }
