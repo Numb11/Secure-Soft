@@ -9,7 +9,7 @@ o Terry Omorowa <br>
 o Joe Lyons <br>
 o Tom Walker <br>
 
-**Initial Idea** - Social Media Site <br>
+**Initial Idea** - Social Media Site, Direct merssaging only e.g Discord <br>
 
 **Styles** - Camelcase, inline
 
