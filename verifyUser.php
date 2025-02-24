@@ -32,7 +32,7 @@
 
 
     function endSess(){
-        exit("Attempts remaining: " . $_SESSION["remainingAtt"]);
+        exit(" <br> <strong>Attempts remaining: " . $_SESSION["remainingAtt"] . "</strong>");
 
     }
 
