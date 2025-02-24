@@ -4,7 +4,7 @@ body{
 
 }
 
-.logInFormArea{
+.logInFormArea, .signUpFormArea{
     max-width : 600px;
     margin: auto;
     padding: 20px;
