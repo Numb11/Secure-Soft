@@ -1,5 +1,4 @@
 <?php
-
     // Prevent Brute Force through attempt limit, could IP ban
     if (!isset($attempts)) {
         $attempts = 3; //change to adjust login attempt
@@ -62,14 +61,6 @@
             
         }
         }
-
-
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-
-
-
-    validateCred($username, $password);
 
 ?>
 

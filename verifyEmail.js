@@ -1,31 +1,28 @@
-import emailjs from 'emailjs-com';
 
-emailjs.init({
-    publicKey: "qoXAHVjirQz_eVgQlDu-I",
-  });
 
 function openSignUpForm(){
 }
 
 function generateUqDigits(){
-    return Math.floor(1000+matchMedia.random()*9000);
+    return String(Math.floor(1000+Math.random()*9000));
 
 }
 
 function verifyEmail(){
-    const info = document.getElementById("emailForm");
-    let email = (info.elements["email"]).value;
-
+    const form = document.getElementById("emailForm");
+    const email = (form.elements["email"]).value;
+    console.log(email)
 
     emailjs.send("service_loyxw0m","template_hq7voyf",{
-        message: String(generateUqDigits),
         email: email,
+        message: String(generateUqDigits()),
         }, "_fC1jhZcfXnMvi2yl").then(
             (response) => {
                 
                 alert("Email Verification sent");
             },
             (error) => {
+                console.error(error);
                 alert("Please retry");
             },
         );

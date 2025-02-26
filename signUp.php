@@ -5,7 +5,13 @@
 <head>
 <title> FakeBook </title>
 <link rel = "stylesheet" href="log-in.css">
-<script src="verifyEmail.js"></script></HEAD>
+<script src="verifyEmail.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script type="text/javascript"> emailjs.init('_fC1jhZcfXnMvi2yl')</script>
+
+
 <link rel="icon" href="favi.png">
 </head>
 
