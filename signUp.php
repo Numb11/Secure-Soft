@@ -21,17 +21,29 @@
 
         <form action="" id="emailForm">
             <label for="email">Email: </label> <br>
-            <input type = "email" placeholder = "Enter Email" name="email" required><br>
+            <input type = "email" placeholder = "Enter Email" name="email"><br>
             <br>
-            <button id = "verButt" onclick= "verifyEmail()" >Verify email! </button>
+            <button type = "button" id = "verButt" onclick= "verifyEmail()" >Send verification email </button>
 
-        <label> <a href="index.php">Log-in here!</a> </label>
+            <br>
+            <br>
+
+            <label for = "otp"> Unique No.: </label> <br>
+            <input type = "text" placeholder = "Enter OTP" name = "otp"> <br>
+
+            <br>
+            
+            <button type = "button" id = "OtpButt" onclick = "openSignUpForm()"> Verify email </button> <br>
+
+            <br>
+
+            <label> <a href="index.php">Log-in here!</a> </label>
 
         <br></br>
 
         </form>
 
-        </form>
+        <form action = "" id = ""
     </div>
 
 
