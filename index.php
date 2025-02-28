@@ -34,7 +34,7 @@
 
         <br></br>
 
-        <label> <a href="signup.php">Sign-up here</a> </label>
+        <label> <a href="verEmailhtml.php">Sign-up here</a> </label>
 
         <br></br>
 
