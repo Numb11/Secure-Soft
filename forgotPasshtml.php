@@ -12,14 +12,14 @@
 
 
 <body>
-    <h1 id = "bannerText"> Sign-Up </h1>
+    <h1 id = "bannerText"> Reset password </h1>
     <div class = "signUpFormArea">
 
-        <form action="verEmail.php" id="emailForm" method = "POST">
+        <form action="resetEmail.php" id="emailForm" method = "POST">
             <label for="email">Email: </label> <br>
             <input type = "email" placeholder = "Enter Email" name="email"><br>
             <br>
-            <button type = "submit" id = "verButt">Send verification email </button>
+            <button type = "submit" id = "verButt">Send reset email </button>
 
             <br>
             <label> <a href="index.php">Log-in here!</a> </label>

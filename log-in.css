@@ -9,17 +9,17 @@ body{
     margin: auto;
     padding: 20px;
     padding-bottom: 30px;
-    background-color: rgb(193, 193, 193);
+    background-color: rgb(229, 229, 229);
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
     display: inline-block;
     text-align:center;
     border-radius: 5px;
-    
+    line-height: 25px;
 
 }
 
 .logInFormArea:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 
 
 }
@@ -40,8 +40,45 @@ body{
 
 .logInForm,button,input{
     width:100%;
-    border-radius: 1px;
+    border: none;
+    height: 20px;
 }
+
+.logInForm,button{
+    width:70%;
+    height: 25px;
+    background-color: rgb(28, 234, 90);
+    border-radius: 3px;
+}
+
+.signUpForm,button{
+        width:70%;
+        height: 40px;
+        background-color: rgb(28, 234, 90);
+        border-radius: 3px;
+}
+
+
+.signUpForm{
+    width:70%;
+    height: 40px;
+    background-color: rgb(28, 234, 90);
+    border-radius: 3px;
+}
+
+#checkbox{
+    height: 15px;
+    background-color: rgb(186, 186, 186);
+
+}
+
+#remember{
+    display: inline-block;
+
+
+}
+
+
 
 a{
     text-decoration: inherit;

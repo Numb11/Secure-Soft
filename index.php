@@ -22,11 +22,9 @@
 
 
         <br>
+        <br>
 
-        <label>
-                <input type="checkbox" checked="checked" name="remember">
-                Remember me  
-        </label>
+        <label id= "remember"> Remember me<input type="checkbox" checked="checked" name="remember" id= "checkbox"></label>
 
         <br></br>
 
@@ -35,6 +33,10 @@
         <br></br>
 
         <label> <a href="verEmailhtml.php">Sign-up here</a> </label>
+
+        <br></br>
+
+        <label> <a href="forgotPasshtml.php">Forgot your password?</a> </label>
 
         <br></br>
 

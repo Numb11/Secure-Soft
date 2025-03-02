@@ -8,7 +8,6 @@
     $UrlUid = hash("sha256", $_GET["activation_code"]); //Hash UID given for verification email and stored in url
     $UrlEmail = hash("sha256", $_GET["email"]) //hash email in url too
 
-    
 
 
     if ($UrlUid){
@@ -25,10 +24,11 @@
                 {
                     if ($DbUID == $UrlUid)
                     {
-                        echo "verified"
+                        echo "Verified!"
                         session_start();
 
                         //UPDATE DB NOW REMOVE VERIFIED 
+                        //Redirect to login page
 
     } 
     
