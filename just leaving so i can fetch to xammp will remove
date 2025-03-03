@@ -1,0 +1,58 @@
+<?php
+
+
+$email = $_POST['email'];
+$password = $_POST['psw'];
+$repeat = $_POST['psw-repeat'];
+
+echo "email: " . $email . ", password: " . ", repeat: " . $repeat;
+?>
+<?php
+$email = $_POST['email'];
+$password  = $_POST['psw'];
+$repeat = $_POST['psw-repeat'];
+
+if(strlen($email) < 1 || strlen($email) > 100)
+{
+    if (strlen($email) < 1)
+      echo "email length too short";
+    else
+      echo "email length too long";
+
+     exit();
+}
+else if (strpos($email,'@') == false)
+{
+   echo "email syntax invalid";
+   exit();
+}
+else if (strlen($password) < 8)
+{
+  echo "Password length too short";
+   exit();
+}
+else if ($password !== $repeat)
+{
+  echo "your passwords don't match up";
+  exit();
+}
+
+$hash = password_hash($password, PASSWORD_DEFAULT);
+
+$dbcreds = new mysqli('localhost', 'root', '', '6066COMP');
+
+if ($stmt = dbcreds -> prepare("INSERT INTO 'users' ('email','password') VALUES (?,?)"))
+{
+   $stmt -> bind_param("ss", $email, $hash);
+   $stmt -> execute();
+
+ if  ($stmt -> insert_id == 0)
+  {
+     echo "Database error";
+     exit();
+  }
+   
+  $stmt -> close();
+
+ }
+?>
