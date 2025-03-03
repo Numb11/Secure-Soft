@@ -39,6 +39,59 @@
         <form action = "" id = ""
     </div>
 
+    <?php
+
+
+$email = $_POST['email'];
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+
+if(strlen($email) < 1 || strlen($email) > 100)
+{
+    if (strlen($email) < 1)
+      echo "email length too short";
+    else
+      echo "email length too long";
+
+     exit();
+}
+else if (strpos($email,'@') == false)
+{
+   echo "email syntax invalid";
+   exit();
+}
+else if (strlen($password) < 8)
+{
+  echo "Password length too short";
+   exit();
+}
+else if ($password !== $repeat)
+{
+  echo "your passwords don't match up";
+  exit();
+}
+
+$hash = password_hash($password, PASSWORD_DEFAULT);
+
+$dbcreds = new mysqli('localhost', 'root', '', 'users');
+
+if ($stmt = dbcreds -> prepare("INSERT INTO 'users' ('email','password') VALUES (?,?)"))
+{
+   $stmt -> bind_param("ss", $email, $hash);
+   $stmt -> execute();
+
+ if  ($stmt -> insert_id == 0)
+  {
+     echo "Database error";
+     exit();
+  }
+   
+  $stmt -> close();
+
+ }
+?>
+
 
 </body>
 </html>
