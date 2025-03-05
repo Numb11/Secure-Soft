@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `friendship` (
-  `Friendshipid` int(11) NOT NULL,
+  `Friendshipid` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
   `UserID1` int(11) NOT NULL,
   `UserID2` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -40,7 +40,7 @@ CREATE TABLE `friendship` (
 --
 
 CREATE TABLE `message` (
-  `MessageID` int(11) NOT NULL,
+  `MessageID` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
   `SenderID` int(11) NOT NULL,
   `RecieverID` int(11) NOT NULL,
   `Content` text NOT NULL,
@@ -56,13 +56,13 @@ CREATE TABLE `message` (
 --
 
 CREATE TABLE `user` (
-  `UserID` int(11) NOT NULL,
-  `Username` varchar(50) NOT NULL,
+  `UserID` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
+  `Username` varchar(50) NOT NULL UNIQUE,
   `Password` varchar(255) NOT NULL,
-  `Email` varchar(100) NOT NULL,
+  `Email` varchar(100) NOT NULL UNIQUE,
   `RecvFriend` tinyint(1) NOT NULL,
   `ProfilePicture` varchar(255) NOT NULL,
-  `VerID` varchar(255) NOT NULL
+  `VerID` varchar(255) NOT NULL  UNIQUE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

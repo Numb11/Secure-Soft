@@ -58,12 +58,46 @@
         
         $header = "From:" . $senderEmail;
 
-        mail($email, $subject, $message, $header);
+        if(mail($email, $subject, $message, $header)){
+
+            try{
+                $dbcreds = new mysqli('127.0.0.1', 'root','root','fakebook'); //Define DB credentials
+                $verification_code = hash("sha256", $uid);
+
+                $stmt = $dbcreds->prepare("INSERT INTO 'user' ('Email','VerID') VALUES (?,?)");  
+                $stmt->bind_param("ss", $email,$verification_code);      
+    
+                if ($stmt->execute()){
+                    echo "UID updated";
+    
+                } else{
+                    throw new Exception($stmt->error);
+    
+                }
+                $stmt -> close();
+                $dbcreds->close();
+            }catch (Exception $e){
+                if (strpos($e->getMessage(), "Duplicate entry") !== false){
+                    echo "Error: User wirh emial or verification code exists";
+                    
+    
+                } else{
+                    echo "Error ". $e->getMessage();
+    
+                }
+    
+    
+    
+    
+            }
+    
+
+
+
+
+        }
         
         $_SESSION["email"] = $email;
-        $_SESSION["uid"] = $uid;
-        
-
 
     }
     

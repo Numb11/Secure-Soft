@@ -1,6 +1,6 @@
 
 <?php
-    $dbcreds = new mysqli('localhost', 'x', 'y', 'z',0000); //Define DB credentials
+    $dbcreds = new mysqli("localhost", "joe", "root","fakebook"); //Define DB credentials
 
 
 
@@ -12,10 +12,9 @@
 
     if ($UrlUid){
 
-        if ($stmt = $dbcreds -> prepare("SELECT `email`, `verification_code` FROM `User' WHERE BINARY `email` = email AND 'VerId' = id LIMIT 1")) //fetch UID from db
+        if ($stmt = $dbcreds -> prepare("SELECT `email`, `verification_code` FROM `user' WHERE BINARY `Email` = ? AND 'VerId' = ? LIMIT 1")) //fetch UID from db
             {
-                $stmt -> bind_param("s", $email); 
-                $stmt -> bind_param("id", $UrlUid);
+                $stmt -> bind_param("ss", $email, $UrlUid); 
                 $stmt -> execute();
                 $stmt -> bind_result($DbUID);
                 $stmt -> store_result();
