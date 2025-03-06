@@ -12,9 +12,8 @@
 
 
 <body>
-    <h1 id = "bannerText"> You're Verified! </h1>
+    <h1 id = "bannerText"> Sign-up! </h1>
     <div class = "signUpFormArea">
-
         <form action="signUp.php" id="signUpForm" method = "POST">
         <label for="email">Email: </label> <br>
             <input type = "email" placeholder = "Enter email" name="email"><br>

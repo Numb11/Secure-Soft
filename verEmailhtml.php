@@ -22,7 +22,8 @@
             <button type = "submit" id = "verButt">Send verification email </button>
 
             <br>
-            <label> <a href="index.php">Log-in here!</a> </label>
+            <label> <a href="index.php">Log-in here!</a> </label><br>
+            <label> <a href="signUphtml.php">Verified? Click here to sign-up</a></label>
 
         <br></br>
 

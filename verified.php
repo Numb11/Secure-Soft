@@ -21,7 +21,7 @@
 
                     if (strcmp($DbUID,$UrlUid))
                         {
-                            echo "Verified! Please return to the log-in page";
+                            echo "Verified! Please return to the sign-up page";
                             session_start();
 
                             $stmt = $dbcreds->prepare("UPDATE `user` SET Ver = TRUE");
