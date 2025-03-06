@@ -57,12 +57,13 @@ CREATE TABLE `message` (
 
 CREATE TABLE `user` (
   `UserID` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
-  `Username` varchar(50) NOT NULL UNIQUE,
+  `Username` varchar(50) NOT NULL,
   `Password` varchar(255) NOT NULL,
   `Email` varchar(100) NOT NULL UNIQUE,
   `RecvFriend` tinyint(1) NOT NULL,
   `ProfilePicture` varchar(255) NOT NULL,
-  `VerID` varchar(255) NOT NULL  UNIQUE
+  `VerID` varchar(255) NOT NULL  UNIQUE,
+  `Ver` boolean NOT NULL DEFAULT FALSE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

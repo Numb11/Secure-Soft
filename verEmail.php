@@ -2,7 +2,7 @@
 
     // Prevent Brute Force through attempt limit, could IP ban
     if (!isset($attempts)) {
-        $attempts = 3; //change to adjust login attempt
+        $attempts = 50; //change to adjust login attempt
     } 
 
 
@@ -13,7 +13,7 @@
         $_SESSION["remainingAtt"] = ($attempts - $_SESSION["logAtt"]);
         $_SESSION["login_time_stamp"] = time();
     }else{
-        if ((time()- $_SESSION["login_time_stamp"]) > 50){ //Session should end after 50 seconds
+        if ((time()- $_SESSION["login_time_stamp"]) > 600){ //Session should end after 50 seconds
             echo "Session timeout, please refresh";
             session_unset();
             session_destroy();
@@ -58,17 +58,24 @@
         
         $header = "From:" . $senderEmail;
 
-        if(mail($email, $subject, $message, $header)){
 
             try{
-                $dbcreds = new mysqli('127.0.0.1', 'root','root','fakebook'); //Define DB credentials
+                $dbcreds = new mysqli('localhost', 'root','root','fakebook',3307); //Define DB credentials
                 $verification_code = hash("sha256", $uid);
 
-                $stmt = $dbcreds->prepare("INSERT INTO 'user' ('Email','VerID') VALUES (?,?)");  
+                $stmt = $dbcreds->prepare("INSERT INTO `user` (`Email`,`VerID`) VALUES (?,?)");  
                 $stmt->bind_param("ss", $email,$verification_code);      
     
                 if ($stmt->execute()){
                     echo "UID updated";
+                    if(mail($email, $subject, $message, $header)){
+                        echo "Verification email sent!, please return to login page after verifying :-)";
+
+
+                    }else{
+                        echo "Oh no, something went wrong with sending your email, please try again";
+
+                    }
     
                 } else{
                     throw new Exception($stmt->error);
@@ -78,8 +85,9 @@
                 $dbcreds->close();
             }catch (Exception $e){
                 if (strpos($e->getMessage(), "Duplicate entry") !== false){
-                    echo "Error: User wirh emial or verification code exists";
+                    echo "You have already attempted verification with ".  $email ." , please check your inbox";
                     
+
     
                 } else{
                     echo "Error ". $e->getMessage();
@@ -93,9 +101,6 @@
     
 
 
-
-
-        }
         
         $_SESSION["email"] = $email;
 
