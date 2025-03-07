@@ -1,46 +1,20 @@
-<?php   
-    
-
-    // Prevent Brute Force through attempt limit, could IP ban
-    if (!isset($attempts)) {
-        $attempts = 3; //change to adjust login attempt
-    } 
 
 
-    session_start(); //Start unique session
-
-    if (!isset($_SESSION["logAtt"])) {         
-        $_SESSION["logAtt"] = 0;
-        $_SESSION["remainingAtt"] = ($attempts - $_SESSION["logAtt"]);
-        $_SESSION["login_time_stamp"] = time();
-    }else{
-        if ((time()- $_SESSION["login_time_stamp"]) > 50){ //Session should end after 50 seconds
-            echo "Session timeout, please refresh";
-            session_unset();
-            session_destroy();
-            exit();
-
-        }
-
-    }
-    if ($_SESSION["logAtt"] >= $attempts){
-        echo "Access Denied, too many attempts";
-        exit();
-    }else{
-        $_SESSION["logAtt"]++; //change for unlimited attempt
-        $_SESSION["remainingAtt"]--;
-    }
+<?php
+//connect to sql database
+$conn = new mysqli('localhost', 'root','','fakebook');
 
 
-    function endSess(){
-        exit(" <br> <strong>Attempts remaining: " . $_SESSION["remainingAtt"] . "</strong>");
+//proccessing the submitted sign up form
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = trim($_POST["email"]);
+    $username = trim($_POST["username"]);
+    $password = trim($_POST["password"]);
 
-    }
 
-
-
-    
-    function validateCred($username, $password)
+	//fucntion to make sure username and password is in correct format
+	
+	 function validateCred($username, $password)
         {
 
         $passPatt = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{14,50}$/"; //geeksForGeeks
@@ -62,51 +36,79 @@
             endSess();
             
         }
-
-        return True;
         }
 
+	//cehcking if the email is verified inside the database
+    $emailCheck = $conn->prepare("SELECT `Ver` FROM `user` WHERE `Email` = ?");
+    $emailCheck->bind_param("s", $email);
+    $emailCheck->execute();
+    $emailCheck->store_result();
 
-        $username = $_POST["username"];
-        $password = $_POST["password"];
+	//checking that there are no rows where the email sint verified
+    if ($emailCheck->num_rows == 0 ) {
+        echo "error: Email not verified ";
+        exit();
+    }elseif($emailCheck->num_rows > 1 ) {
+        echo "error: Username is already taken";
+        exit();
+    }
+	
+	//making sure account doesnt already have password
+	$existing_pass= '';
+	$passCheck = $conn->prepare("SELECT Password FROM user WHERE email = ?");
+    $passCheck->bind_param("s", $email);
+    $passCheck->execute();
+    $passCheck->store_result();
+	$passCheck->bind_result($existing_pass);
+	
+	
+	
+	IF (strlen($existing_pass) > 0){
+		ECHO "ERROR: it appears this account is already signed up";
+		exit();
+	}else{
+		
+		
+	}
+	
+   
 
-        if (validateCred($username, $password)){
+    //need to check if username is unique
+    //select all rows with same username if theres > 0 then username is already taken
+    $userCheck = $conn->prepare("SELECT username FROM user WHERE username = ?");
+	
+    $userCheck->bind_param("s", $username);
+    $userCheck->execute();
+    $userCheck->store_result();
+	IF ($userCheck->num_rows > 0 ) {
+        echo "error: username is already taken";
+        exit();
+    }
+	
+	
+	
+	$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        
+    //update database row with username and password 
+    $sql_update = ("UPDATE `user` SET `Username` = ?, `Password` = ? WHERE `email` = ?");
+    $stmt = $conn->prepare($sql_update);
+    $stmt->bind_param("sss", $username, $hashed_password, $email);
 
-            try{
+    //checking if data insertion was executed
+    if ( $stmt->execute()) {
+		
+        echo "You have signed up!  Please return to the log-in page :)";
+		?>
+		<br>
+            <br>
+            <label> <a href="index.php">Log-in here!</a> </label>
 
-                $dbcreds = new mysqli('localhost', 'root','root','fakebook',3307); //Define DB credentials
-                $hashPass = hash("sha256", $password);
+        <br></br>
+		<?php
+		
+    }else{
+        echo "error signup unsuccessful ";
+    }
 
-                $stmt = $dbcreds->prepare("SELECT `Password` FROM `user` WHERE `Username` = ? AND `Password` = ?");  
-                $stmt->bind_param("ss", $username, $hashPass);   
-                $stmt->execute();
-                $stmt->store_result();     
-
-                if($stmt->num_rows == 1 ){
-                    echo "Logged in! Landing page will be here:";
-
-
-
-
-                }else{
-                    echo "Incorrect log-in details :(";
-
-                }
-
-                $stmt -> close();
-                $dbcreds->close();
-                exit();
-
-
-            }catch (Exception $e){
-
-                    echo "Error, Please try again". $e->getMessage();
-    
-                }
-        }
-
+}
 ?>
-
-
