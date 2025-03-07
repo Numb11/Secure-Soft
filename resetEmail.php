@@ -58,14 +58,40 @@
         
         $header = "From:" . $senderEmail;
 
-        mail($email, $subject, $message, $header);
-        
-        $_SESSION["email"] = $email;
-        $_SESSION["uid"] = $uid;
         
 
+        try{
+            $dbcreds = new mysqli('localhost', 'root','root','fakebook',3307); //Define DB credentials
+            $verification_code = hash("sha256", $uid);
+            $stmt = $dbcreds->prepare("INSERT INTO `user` (`VerID`) SELECT ? FROM `user` WHERE `Username` = ? AND `Password` IS NOT NULL AND `Password` <> ''");  
+            $stmt->bind_param("ss",$verification_code, $email,);      
 
-    }
+            if ($stmt->execute()){
+                if(mail($email, $subject, $message, $header)){
+                    echo "Reset password email sent!";
+
+
+                }else{
+                    echo "Oh no, something went wrong with sending your email, please try again";
+
+                }
+
+            } else{
+                throw new Exception($stmt->error);
+
+            }
+            $stmt -> close();
+            $dbcreds->close();
+            }catch (Exception $e){
+                echo "Error ". $e->getMessage();
+
+            }
+
+
+
+
+        }
+        
     
 
     $email = $_POST["email"];

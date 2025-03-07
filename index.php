@@ -24,8 +24,6 @@
         <br>
         <br>
 
-        <label id= "remember"> Remember me<input type="checkbox" checked="checked" name="remember" id= "checkbox"></label>
-
         <br></br>
 
         <button type = "submit">Login</button>

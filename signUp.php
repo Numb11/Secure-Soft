@@ -9,7 +9,7 @@ $conn = new mysqli('localhost', 'root','root','fakebook',3307);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST["email"]);
     $username = trim($_POST["username"]);
-    $password = trim($_POST["password"]);
+    $password = hash("sha256", trim($_POST["password"]));
 
 
     $emailCheck = $conn->prepare("SELECT Ver FROM user WHERE Email = ?");
@@ -61,6 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }else{
         echo "error signup unsuccessful ";
     }
-
+    
 }
 ?>

@@ -62,6 +62,49 @@
             endSess();
             
         }
+
+        return True;
+        }
+
+
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+
+        if (validateCred($username, $password)){
+
+        
+
+            try{
+
+                $dbcreds = new mysqli('localhost', 'root','root','fakebook',3307); //Define DB credentials
+                $hashPass = hash("sha256", $password);
+
+                $stmt = $dbcreds->prepare("SELECT `Password` FROM `user` WHERE `Username` = ? AND `Password` = ?");  
+                $stmt->bind_param("ss", $username, $hashPass);   
+                $stmt->execute();
+                $stmt->store_result();     
+
+                if($stmt->num_rows == 1 ){
+                    echo "Logged in! Landing page will be here:";
+
+
+
+
+                }else{
+                    echo "Incorrect log-in details :(";
+
+                }
+
+                $stmt -> close();
+                $dbcreds->close();
+                exit();
+
+
+            }catch (Exception $e){
+
+                    echo "Error, Please try again". $e->getMessage();
+    
+                }
         }
 
 ?>
