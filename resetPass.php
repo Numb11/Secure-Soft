@@ -6,7 +6,7 @@
 
 <?php
 
-    $dbcreds = new mysqli('localhost', 'root','root','fakebook',3307); //Define DB credentials
+    include("admin/config/dbCon.php");
 
     $UrlUid = hash("sha256", $_GET["activation_code"]); //Hash UID given for verification email and stored in url
 
@@ -18,7 +18,7 @@
     try{
         if ($UrlUid){
 
-            if ($stmt = $dbcreds -> prepare("SELECT `VerID` FROM `user` WHERE `Email` = ? AND `VerID` = ? LIMIT 1")) //fetch UID from db
+            if ($stmt = $con -> prepare("SELECT `VerID` FROM `user` WHERE `Email` = ? AND `VerID` = ? LIMIT 1")) //fetch UID from db
                 {
                     $stmt -> bind_param("ss", $email, $UrlUid); 
                     $stmt -> execute();

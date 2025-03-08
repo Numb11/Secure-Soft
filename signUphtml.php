@@ -7,7 +7,7 @@
 <link rel = "stylesheet" href="log-in.css">
 
 
-<link rel="icon" href="favi.png">
+<link rel="icon" href="admin\config\assets\favi.png">
 </head>
 
 

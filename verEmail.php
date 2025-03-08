@@ -1,5 +1,5 @@
 <?php
-
+    include("admin/config/dbCon.php");
     // Prevent Brute Force through attempt limit, could IP ban
     if (!isset($attempts)) {
         $attempts = 50; //change to adjust login attempt
@@ -60,10 +60,9 @@
 
 
             try{
-                $dbcreds = new mysqli('localhost', 'root','root','fakebook',3307); //Define DB credentials
                 $verification_code = hash("sha256", $uid);
 
-                $stmt = $dbcreds->prepare("INSERT INTO `user` (`Email`,`VerID`) VALUES (?,?)");  
+                $stmt = $con->prepare("INSERT INTO `user` (`Email`,`VerID`) VALUES (?,?)");  
                 $stmt->bind_param("ss", $email,$verification_code);      
     
                 if ($stmt->execute()){
