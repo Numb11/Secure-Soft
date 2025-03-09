@@ -1,26 +1,38 @@
 
 
 <?php   
-        //Handles User log-in
-        include("admin/config/dbCon.php");
+        //By Joe
+        //This script handles the verification of a user attempting log-in
+        //SQL injection fixed through sanitisation, validation and prepared SQL statements
+        //FIle type nforcemnt does not apply here
+        //CSRF TOKENS NOT ADDED, Remote file uplaod not applicable as vulnerabilit
+        //User input not fully sanitised allowing XSS, to prevent, htmlspecialchars() should be used
+
+        include("admin/config/dbCon.php"); //DB credentials
+
+
+        function sanitiseString($str){ //Sanitise input
+            $str = trim($str);
+            $str = stripslashes($str);
+            return $str;
+
+        }
 
         function endSess(){
             exit(" <br> <strong>Attempts remaining: " . $_SESSION["remainingAtt"] . "</strong>");
         }
-    
-        if (!isset($attempts)) { //Prevents Brute Force
-            $attempts = 5; //Change to adjust login attempt
-        } 
 
-        session_start(); //Start unique session
+        session_start(); //Start unique session allowing for global variables
+
+        $attempts = 5;
 
         if (!isset($_SESSION["logAtt"])) { 
             $_SESSION["logAtt"] = 0;
-            $_SESSION["remainingAtt"] = ($attempts - $_SESSION["logAtt"]);
+            $_SESSION["remainingAtt"] = ($attempts - $_SESSION["logAtt"]);//5 login attempts
             $_SESSION["login_time_stamp"] = time();
 
         }else{
-            if ((time()- $_SESSION["login_time_stamp"]) > 50){ //Session should end after x seconds
+            if ((time()- $_SESSION["login_time_stamp"]) > 300){ //Session should end after 5 minutes, prevention of session hijacking
                 echo "Session timeout, please refresh";
                 session_unset();
                 session_destroy();
@@ -28,21 +40,19 @@
             }
 
         }
-        if ($_SESSION["logAtt"] >= $attempts){
+        if ($_SESSION["logAtt"] >= $attempts){ 
             echo "Access Denied, too many attempts";
             exit();
         }else{
-            $_SESSION["logAtt"]++; //change for unlimited attempt
+            $_SESSION["logAtt"]++; 
             $_SESSION["remainingAtt"]--;
         }
 
-        //Fetch data from form
-        $username = $_POST["username"];
-        $password = $_POST["password"];
-
-            
-
-        try{
+        //Fetch data from form using the more secure non caching POST
+        $username = sanitiseString($_POST["username"]);
+        $password = sanitiseString($_POST["password"]);
+        
+        try{ //Error handle to prevent 
 
                     $hashPass = hash("sha256", $password);
                     $stmt = $con->prepare("SELECT `Password` FROM `user` WHERE `Username` = ? AND `Password` = ?");  
@@ -53,12 +63,10 @@
                     if($stmt->num_rows == 1 ){
                         echo "Logged in! Redirect to landing page";
                         $_SESSION["auth"] = True; 
-                        header("Location: ");
                         
 
                     }else{
                         echo "Incorrect log-in details :(";
-
                     }
 
                     $stmt -> close();
@@ -68,7 +76,7 @@
 
                 }catch (Exception $e){
 
-                        echo "Error, Please try again". $e->getMessage();
+                        echo "Oops, something catastrophic has happened :(";
         
             }
             

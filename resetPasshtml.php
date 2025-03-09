@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     
@@ -12,9 +13,7 @@
 <h1 id = "bannerText">Reset Password</h1>
     <div class = "formArea">
         <form id = "resetPassForm" action="resetPass.php" method = "POST">
-            <input type="email" placeholder = "Enter email" name="email" required>
-            <br>
-            <br>
+    
 
             <label for="password">Password: :</label>
             <br>
@@ -31,6 +30,7 @@
 </html>
 
 <?php
+    //by Joe
     session_start();
     $_SESSION["urlUid"] = $_GET["activation_code"];
     $_SESSION["email"] =  $_GET["email"];
