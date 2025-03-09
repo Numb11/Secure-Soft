@@ -9,7 +9,7 @@
         }
     
         if (!isset($attempts)) { //Prevents Brute Force
-            $attempts = 3; //Change to adjust login attempt
+            $attempts = 5; //Change to adjust login attempt
         } 
 
         session_start(); //Start unique session
@@ -20,7 +20,7 @@
             $_SESSION["login_time_stamp"] = time();
 
         }else{
-            if ((time()- $_SESSION["login_time_stamp"]) > 600){ //Session should end after x seconds
+            if ((time()- $_SESSION["login_time_stamp"]) > 50){ //Session should end after x seconds
                 echo "Session timeout, please refresh";
                 session_unset();
                 session_destroy();
@@ -45,7 +45,6 @@
         try{
 
                     $hashPass = hash("sha256", $password);
-
                     $stmt = $con->prepare("SELECT `Password` FROM `user` WHERE `Username` = ? AND `Password` = ?");  
                     $stmt->bind_param("ss", $username, $hashPass);   
                     $stmt->execute();

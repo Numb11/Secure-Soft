@@ -1,6 +1,7 @@
-//Handling of signing up of a user
+
 
 <?php
+    //Handling of signing up of a user
     include("admin/config/dbCon.php");
 
 
@@ -60,7 +61,7 @@
         $createCheck->execute();
         $createCheck->store_result();
         $createCheck -> bind_result($dbUsername);
-        echo $dbUsername. "DHUD";
+        echo $dbUsername;
         if (strlen($dbUsername) > 1){
             echo "Error: Please try again";
             exit();
@@ -80,7 +81,7 @@
 
         //update database row with username and password 
         $sql_update = ("UPDATE `user` SET `Username` = ?, `Password` = ? WHERE `email` = ?");
-        $stmt = $conn->prepare($sql_update);
+        $stmt = $con->prepare($sql_update);
         $stmt->bind_param("sss", $username, $password, $email);
 
         //checking if data insertion was executed
