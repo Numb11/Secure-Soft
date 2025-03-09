@@ -1,36 +1,44 @@
 <?php
 include 'db.php';
 
-if (isset($_POST['upload'])) {
-    $user_id = intval($_POST['user_id']);
-    $file = $_FILES['file'];
+// Fetch user data (Assuming user ID 1 for demonstration)
+$user_id = 1;
+$result = $conn->query("SELECT * FROM users WHERE id = $user_id");
+$user = $result->fetch_assoc();
+?>
 
-    $targetDir = "uploads/";
-    $fileName = basename($file["name"]);
-    $targetFilePath = $targetDir . $fileName;
-    $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        img { border-radius: 50%; width: 150px; height: 150px; object-fit: cover; }
+        form { margin-top: 20px; }
+    </style>
+</head>
+<body>
 
-    // Allowed file types
-    $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+    <h2>User Profile</h2>
+    
+    <!-- Display Profile Image -->
+    <?php if (!empty($user['profile_image'])): ?>
+        <img src="<?= htmlspecialchars($user['profile_image']) ?>" alt="Profile Picture">
+    <?php else: ?>
+        <img src="default.png" alt="Default Profile">
+    <?php endif; ?>
 
-    if (in_array($fileType, $allowedTypes)) {
-        if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
-            // Update profile image in database
-            $sql = "UPDATE users SET profile_image = ? WHERE id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("si", $targetFilePath, $user_id);
-            if ($stmt->execute()) {
-                echo "Profile updated!";
-                header("Location: profile.php");
-                exit;
-            } else {
-                echo "Database error: " . $stmt->error;
-            }
-        } else {
-            echo "Error uploading file.";
-        }
-    } else {
-        echo "Invalid file type.";
-    }
-}
+    <h3><?= htmlspecialchars($user['name']) ?></h3>
+
+    <!-- Upload Form -->
+    <form action="upload.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="user_id" value="<?= $user_id ?>">
+        <input type="file" name="file" accept="image/*" required>
+        <button type="submit" name="upload">Upload</button>
+    </form>
+
+</body>
+</html>
 ?>
