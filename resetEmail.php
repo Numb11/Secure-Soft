@@ -16,10 +16,10 @@
     function authEmail($email){
         
         $appUrl = "http://localhost:8080/Group%20Project%20-%20Social%20Media/Secure-Soft/resetPasshtml.php";
-        $senderEmail = "tempforproject2@gmail.com";
-        $uid = generateCode();
 
-        $activationLink = $appUrl . "/?email=$email&activation_code=$uid";
+        $senderEmail = "tempforproject2@gmail.com";
+        $uid = hash("sha256", bin2hex(random_bytes(16)));
+        $activationLink =  $appUrl . "?email=$email&activation_code=$uid";
 
         $subject = "Reset password";
         $message = <<<MESSAGE
@@ -33,9 +33,8 @@
 
         try{
             include("admin/config/dbCon.php");
-            $verification_code = hash("sha256", $uid);
-            $stmt = $con->prepare("INSERT INTO `user` (`VerID`) SELECT ? FROM `user` WHERE `Username` = ? AND `Password` IS NOT NULL AND `Password` <> ''");  
-            $stmt->bind_param("ss",$verification_code, $email,);      
+            $stmt = $con->prepare("UPDATE `user` SET `VerID` = ? WHERE `Email` = ? AND `Ver` = 1 AND `Password` IS NOT NULL AND `Password` <> '' ");  
+            $stmt->bind_param("ss",$uid, $email);      
 
             if ($stmt->execute()){
                 if(mail($email, $subject, $message, $header)){
@@ -95,7 +94,6 @@
 
 
     $email = $_POST["email"];
-
     authEmail($email);
 
 ?>

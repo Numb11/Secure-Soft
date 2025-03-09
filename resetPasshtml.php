@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<h1 id = "bannerText">FakeBook</h1>
+<h1 id = "bannerText">Reset Password</h1>
     <div class = "formArea">
         <form id = "resetPassForm" action="resetPass.php" method = "POST">
             <input type="email" placeholder = "Enter email" name="email" required><br>
@@ -25,3 +25,13 @@
 
 </body>
 </html>
+
+<?php
+    session_start();
+    $_SESSION["urlUid"] = $_GET["activation_code"];
+    $_SESSION["email"] =  $_GET["email"];
+
+
+
+
+?>

@@ -26,7 +26,7 @@
             endSess();
     
             }
-
+            
         return True;
         }
 
@@ -39,7 +39,8 @@
         $password = hash("sha256", trim($_POST["password"]));
 
 
-        $emailCheck = $con->prepare("SELECT Ver FROM user WHERE Email = ?");
+        $emailCheck = $con->prepare("SELECT `Ver` FROM `user` WHERE `Email` = ?");
+
         $emailCheck->bind_param("s", $email);
         $emailCheck->execute();
         $emailCheck->store_result();

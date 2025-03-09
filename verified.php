@@ -1,7 +1,8 @@
-//Handles a emial verification link
+
 
 
 <?php
+    //Handles a emial verification link
     include("admin/config/dbCon.php");
 
     $UrlUid = hash("sha256", $_GET["activation_code"]); //Hash UID given for verification email and stored in url
@@ -20,8 +21,11 @@
                     $stmt -> execute();
                     $stmt -> store_result();
                     $stmt -> bind_result($DbUID);
+                    $stmt->fetch();
 
-                    if (strcmp($DbUID,$UrlUid))
+                    
+                    echo($UrlUid . "()" . $DbUID . "()" . $UrlEmail);
+                    if (strcasecmp($DbUID,$UrlUid) == 0)
                         {
                             echo "Verified! Please return to the sign-up page";
                             session_start();

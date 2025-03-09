@@ -32,6 +32,17 @@
                 include("admin/config/dbCon.php");
                 $verification_code = hash("sha256", $uid);
 
+                $stmt = $con->prepare("SELECT `UserID` FROM `user` WHERE `Email` = ?");  
+                $stmt->bind_param("s", $email);
+                $stmt->execute();
+                $stmt->store_result();
+
+                if ($stmt->num_rows > 0 ) {
+                    echo "Something went wrong : (";
+                    exit();
+                }
+
+
                 $stmt = $con->prepare("INSERT INTO `user` (`Email`,`VerID`) VALUES (?,?)");  
                 $stmt->bind_param("ss", $email,$verification_code);      
     
@@ -76,7 +87,7 @@
     } 
     session_start(); //Start unique session
 
-    if (!isset($_SESSION["login_time_stamp"])) {         
+    if (!isset($_SESSION["login_time_stamp"])) {        
         $_SESSION["login_time_stamp"] = time();
     }else{
         if ((time()- $_SESSION["login_time_stamp"]) > 600){ //Session should end after 50 seconds
