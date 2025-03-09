@@ -1,41 +1,10 @@
+
+
 <?php
-    include("admin/config/dbCon.php");
-    // Prevent Brute Force through attempt limit, could IP ban
-    if (!isset($attempts)) {
-        $attempts = 50; //change to adjust login attempt
-    } 
-
-
-    session_start(); //Start unique session
-
-    if (!isset($_SESSION["logAtt"])) {         
-        $_SESSION["logAtt"] = 0;
-        $_SESSION["remainingAtt"] = ($attempts - $_SESSION["logAtt"]);
-        $_SESSION["login_time_stamp"] = time();
-    }else{
-        if ((time()- $_SESSION["login_time_stamp"]) > 600){ //Session should end after 50 seconds
-            echo "Session timeout, please refresh";
-            session_unset();
-            session_destroy();
-            exit();
-
-        }
-
-    }
-    if ($_SESSION["logAtt"] >= $attempts){
-        echo "Access Denied, too many attempts";
-        exit();
-    }else{
-        $_SESSION["logAtt"]++; //change for unlimited attempt
-        $_SESSION["remainingAtt"]--;
-    }
-
     function endSess(){
         exit("Attempts remaining: " . $_SESSION["remainingAtt"]);
 
     }
-
-
 
     function generateCode(){
         return bin2hex(random_bytes(16));
@@ -60,6 +29,7 @@
 
 
             try{
+                include("admin/config/dbCon.php");
                 $verification_code = hash("sha256", $uid);
 
                 $stmt = $con->prepare("INSERT INTO `user` (`Email`,`VerID`) VALUES (?,?)");  
@@ -81,7 +51,7 @@
     
                 }
                 $stmt -> close();
-                $dbcreds->close();
+                $con->close();
             }catch (Exception $e){
                 if (strpos($e->getMessage(), "Duplicate entry") !== false){
                     echo "You have already attempted verification with ".  $email ." , please check your inbox";
@@ -92,23 +62,34 @@
                     echo "Error ". $e->getMessage();
     
                 }
-    
-    
-    
-    
             }
-    
-
-
-        
         $_SESSION["email"] = $email;
+    }
+
+
+
+
+    //Handles sending of verification email
+    // Prevent Brute Force through attempt limit, could IP ban
+    if (!isset($attempts)) {
+        $attempts = 50; //change to adjust login attempt
+    } 
+    session_start(); //Start unique session
+
+    if (!isset($_SESSION["login_time_stamp"])) {         
+        $_SESSION["login_time_stamp"] = time();
+    }else{
+        if ((time()- $_SESSION["login_time_stamp"]) > 600){ //Session should end after 50 seconds
+            echo "Session timeout, please refresh";
+            session_unset();
+            session_destroy();
+            exit();
+
+        }
 
     }
-    
 
     $email = $_POST["email"];
-
-
     authEmail($email);
 
 ?>

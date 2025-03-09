@@ -13,7 +13,7 @@
 
 <body>
     <h1 id = "bannerText"> Reset password </h1>
-    <div class = "signUpFormArea">
+    <div class = "formArea">
 
         <form action="resetEmail.php" id="emailForm" method = "POST">
             <label for="email">Email: </label> <br>

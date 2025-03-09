@@ -13,7 +13,7 @@
 
 <body>
     <h1 id = "bannerText"> Sign-up! </h1>
-    <div class = "signUpFormArea">
+    <div class = "formArea">
         <form action="signUp.php" id="signUpForm" method = "POST">
         <label for="email">Email: (verified emails only!) </label> <br>
         <br>

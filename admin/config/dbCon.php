@@ -3,7 +3,7 @@
 $host = "localhost";
 $username = "root";
 $password = "root";
-$database = "fakebok";
+$database = "fakebook";
 $port = 3307;
 
 try{

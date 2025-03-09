@@ -4,7 +4,7 @@ body{
 
 }
 
-.logInFormArea, .signUpFormArea{
+.formArea{
     max-width : 600px;
     margin: auto;
     padding: 20px;
@@ -18,7 +18,7 @@ body{
 
 }
 
-.logInFormArea:hover {
+.formArea:hover {
     transform: scale(1.05);
 
 
@@ -59,7 +59,7 @@ body{
 }
 
 
-.signUpForm{
+.signUpForm, .resetPassForm{
     width:70%;
     height: 40px;
     background-color: rgb(28, 234, 90);

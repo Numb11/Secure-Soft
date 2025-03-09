@@ -11,7 +11,7 @@
 <body>
 <h1 id = "bannerText">FakeBook</h1>
     <p id = "bannerText">A *secure* direct messaging client...</p>
-    <div class = "logInFormArea">
+    <div class = "formArea">
         <form id = "logInForm" action="verifyUser.php" method = "POST">
             <label for="username">Username:</label><br>
 

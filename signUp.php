@@ -1,4 +1,4 @@
-
+//Handling of signing up of a user
 
 <?php
     include("admin/config/dbCon.php");

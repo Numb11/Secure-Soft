@@ -13,7 +13,7 @@
 
 <body>
     <h1 id = "bannerText"> Sign-Up </h1>
-    <div class = "signUpFormArea">
+    <div class = "formArea">
 
         <form action="verEmail.php" id="emailForm" method = "POST">
             <label for="email">Email: </label> <br>

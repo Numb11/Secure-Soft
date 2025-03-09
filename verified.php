@@ -1,3 +1,5 @@
+//Handles a emial verification link
+
 
 <?php
     include("admin/config/dbCon.php");
