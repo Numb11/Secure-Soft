@@ -13,11 +13,13 @@
     <p id = "bannerText">A *secure* direct messaging client...</p>
     <div class = "formArea">
         <form id = "logInForm" action="verifyUser.php" method = "POST">
-            <label for="username">Username:</label><br>
-
+            <label for="username">Username:</label>
+            <br>
+            <br>
             <input type="text" placeholder = "Enter Username" name="username" required><br>
-
+            <br>
             <label for="password">Password: :</label><br>
+            <br>
             <input type="password" placeholder = "Enter Password"  name="password" required>
 
 

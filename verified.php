@@ -23,7 +23,7 @@
                 
                     if (strcasecmp($DbUID,$UrlUid) == 0)
                         {
-                            echo "Verified! Please return to the sign-up page";
+                            echo "Verified! Please return to the sign-up page, <a href='../signUphtml.php'>Click here</a>";
                             session_start();
 
                             $stmt = $con->prepare("UPDATE `user` SET Ver = TRUE");

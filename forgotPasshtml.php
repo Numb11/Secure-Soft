@@ -17,10 +17,11 @@
 
         <form action="resetEmail.php" id="emailForm" method = "POST">
             <label for="email">Email: </label> <br>
+            <br>
             <input type = "email" placeholder = "Enter Email" name="email"><br>
             <br>
             <button type = "submit" id = "verButt">Send reset email </button>
-
+            <br>
             <br>
             <label> <a href="index.php">Log-in here!</a> </label>
 

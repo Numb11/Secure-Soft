@@ -12,9 +12,13 @@
 <h1 id = "bannerText">Reset Password</h1>
     <div class = "formArea">
         <form id = "resetPassForm" action="resetPass.php" method = "POST">
-            <input type="email" placeholder = "Enter email" name="email" required><br>
+            <input type="email" placeholder = "Enter email" name="email" required>
+            <br>
+            <br>
 
-            <label for="password">Password: :</label><br>
+            <label for="password">Password: :</label>
+            <br>
+            <br>
             <input type="password" placeholder = "Enter Password"  name="password" required>
 
 

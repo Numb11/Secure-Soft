@@ -35,7 +35,7 @@
                             $replaceUID = hash("sha256", bin2hex(random_bytes(16)));
                             $uPassSQL->bind_param("ss", $replaceUID,$urlEmail);
                             $uPassSQL -> execute();
-                            echo "Password changed, please return to the log-in page :)";
+                            echo "Password changed, please log-in;
 
                         }else{
                             echo "Somehting went wrong, this is not the code we sent you!";
