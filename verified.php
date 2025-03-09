@@ -13,24 +13,20 @@
 
 
     try{
-        if ($UrlUid){
 
-            if ($stmt = $con -> prepare("SELECT `VerID` FROM `user` WHERE `Email` = ? AND `VerID` = ? LIMIT 1")) //fetch UID from db
-                {
-                    $stmt -> bind_param("ss", $email, $UrlUid); 
+                    $stmt = $con -> prepare("SELECT `VerID` FROM `user` WHERE `Email` = ? AND `VerID` = ?"); //fetch UID from db
+                    $stmt -> bind_param("ss", $UrlEmail, $UrlUid); 
                     $stmt -> execute();
                     $stmt -> store_result();
                     $stmt -> bind_result($DbUID);
                     $stmt->fetch();
-
-                    
-                    echo($UrlUid . "()" . $DbUID . "()" . $UrlEmail);
+                
                     if (strcasecmp($DbUID,$UrlUid) == 0)
                         {
                             echo "Verified! Please return to the sign-up page";
                             session_start();
 
-                            $stmt = $dbcreds->prepare("UPDATE `user` SET Ver = TRUE");
+                            $stmt = $con->prepare("UPDATE `user` SET Ver = TRUE");
                             $stmt -> execute();
                             
 
@@ -44,8 +40,8 @@
                         
                     }
 
-                }
-            }
+                
+            
     }catch (Exception $e){
         echo "Error: ". $e->getMessage();
     }
