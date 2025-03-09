@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - <%= username %></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .dashboard-container {
+            background-color: white;
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 1000px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .profile-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .profile-info img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            margin-right: 20px;
+        }
+        .profile-info h2 {
+            margin: 0;
+        }
+        .post-form {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .post-form input, .post-form textarea {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .post-form button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        .post-form button:hover {
+            background-color: #0056b3;
+        }
+        .posts {
+            margin-top: 30px;
+        }
+        .post {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .post img {
+            max-width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="profile-info">
+            <img src="<%= profilePicture %>" alt="Profile Picture">
+            <div>
+                <h2><%= username %></h2>
+                <p><%= bio %></p>
+            </div>
+        </div>
+
+        <!-- Profile Picture Upload -->
+        <form action="/uploadProfilePicture" method="POST" enctype="multipart/form-data">
+            <input type="file" name="profilePicture" accept="image/*" required>
+            <button type="submit">Upload Profile Picture</button>
+        </form>
+
+        <!-- Post Upload Form -->
+        <div class="post-form">
+            <form action="/uploadPost" method="POST" enctype="multipart/form-data">
+                <textarea name="text" rows="4" placeholder="What's on your mind?" required></textarea><br>
+                <input type="file" name="postImage" accept="image/*"><br>
+                <button type="submit">Post</button>
+            </form>
+        </div>
+
+        <!-- Display Posts -->
+        <div class="posts">
+            <% posts.forEach(post => { %>
+                <div class="post">
+                    <p><%= post.text %></p>
+                    <% if (post.image) { %>
+                        <img src="<%= post.image %>" alt="Post Image">
+                    <% } %>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html>
