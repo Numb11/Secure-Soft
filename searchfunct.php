@@ -2,8 +2,8 @@
 // Database connection settings
 $host = 'localhost';  // Hostname or IP address of your database server
 $username = 'root';   // Your database username
-$password = 'root';       // Your database password
-$dbname = 'fakebook';  // Your database name
+$password = 'root';   // Your database password
+$dbname = 'fakebook'; // Your database name
 
 // Establish a database connection
 $conn = new mysqli($host, $username, $password, $dbname);
@@ -24,27 +24,35 @@ $result = $conn->query($query);
 
 // Check if there are any results
 if ($result->num_rows > 0) {
-    echo "<h2>Search Results:</h2>";
-    echo "<form method='POST' action=''>"; // You can adjust the action if needed
-
-    // Start the dropdown menu
-    echo "<select name='searchResult' id='searchResult'>";
+    echo "<h2>Search Results for '$searchTerm':</h2>";
     
-    // Add an empty option or a default prompt
-    echo "<option value=''>Select an option</option>";
-
-    // Loop through and populate the dropdown with results
+    // Display the results as an HTML table or list
+    echo "<table border='1'>";
+    echo "<tr><th>User ID</th><th>Username</th><th>Name</th></tr>";
+    
+    // Loop through and display the search results
     while ($row = $result->fetch_assoc()) {
-        echo "<option value='" . $row['id'] . "'>" . $row['name'] . "</option>";
+        echo "<tr>";
+        echo "<td>" . $row['id'] . "</td>";
+        echo "<td>" . $row['Username'] . "</td>";
+        echo "<td>" . $row['name'] . "</td>";
+        echo "</tr>";
     }
 
-    // Close the dropdown and the form
-    echo "</select><br><br>";
-    echo "<button type='submit'>Submit</button>";
-    echo "</form>";
+    echo "</table>";
 } else {
     echo "<p>No results found for '$searchTerm'.</p>";
 }
+
+// Get the URL from the query parameter
+$url = $_GET['url']; // Vulnerability: User-provided URL without validation
+
+// Fetch content from the URL using file_get_contents (SSRF vulnerability)
+$response = file_get_contents($url); // Vulnerable part: User can provide any URL
+
+// Output the fetched content
+echo "<h3>Fetched Content from the URL:</h3>";
+echo "<pre>" . htmlspecialchars($response) . "</pre>";
 
 // Close the connection
 $conn->close();
