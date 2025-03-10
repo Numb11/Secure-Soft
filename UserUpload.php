@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'dbCON.php';
+include 'db.php';
 
 if (!isset($_SESSION['UserID'])) {
     die("Error: User not logged in.");
@@ -8,30 +8,45 @@ if (!isset($_SESSION['UserID'])) {
 
 $UserID = $_SESSION['UserID'];
 $file = $_FILES['file'];
+$bio = trim($_POST['bio']); // Get the bio/caption
 
-$targetDir = "uploads/";
+// Upload directory
+$uploadDir = __DIR__ . "/uploads/";
+$allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+$allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+// Get file details
 $fileName = basename($file["name"]);
-$targetFilePath = $targetDir . $fileName;
-$fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+$fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+$fileTmp = $file["tmp_name"];
+$fileSize = $file["size"];
+$fileMimeType = mime_content_type($fileTmp);
 
-// Check if file is allowed file 
-$allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+// Generate a secure file name
+$newFileName = uniqid("profile_", true) . "." . $fileExt;
+$targetFilePath = $uploadDir . $newFileName;
 
-if (in_array($fileType, $allowedTypes)) {
-    if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
-        
-        $sql = "UPDATE user SET ProfilePicture = ? WHERE UserID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("si", $targetFilePath, $UserID);
-        if ($stmt->execute()) {
-            echo "Profile picture successfull";
-        } else {
-            echo "Database error: " . $stmt->error;
-        }
+// Security checks
+if (!in_array($fileExt, $allowedExtensions) || !in_array($fileMimeType, $allowedMimeTypes)) {
+    die("Error: Invalid file type.");
+}
+if ($fileSize > 2 * 1024 * 1024) { // 2MB limit
+    die("Error: File too large.");
+}
+
+// Move the file and update the database
+if (move_uploaded_file($fileTmp, $targetFilePath)) {
+    $sql = "UPDATE user SET ProfilePicture = ?, Bio = ? WHERE UserID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $newFileName, $bio, $UserID);
+    
+    if ($stmt->execute()) {
+        header("Location: profile.php"); // Refresh profile page
+        exit();
     } else {
-        echo "Error uploading file.";
+        die("Database error: " . $stmt->error);
     }
 } else {
-    echo "Invalid file type. Only JPG, JPEG, PNG, and GIF are allowed.";
+    die("Error: Upload failed.");
 }
 ?>
