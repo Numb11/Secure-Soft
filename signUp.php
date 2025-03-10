@@ -4,7 +4,7 @@
     //Handling of signing up of a user
     include("admin/config/dbCon.php");
 
-
+    //function to validate that username and password are in the correct format 
     function validateCred($username, $password)
         {
 
@@ -40,6 +40,7 @@
         $password = hash("sha256", trim($_POST["password"]));
 
 
+        //checking that the email entered is already verified
         $emailCheck = $con->prepare("SELECT `Ver` FROM `user` WHERE `Email` = ?");
 
         $emailCheck->bind_param("s", $email);
@@ -55,6 +56,7 @@
             exit();
         }
 
+        
         $dbUsername = '';
         $createCheck = $con->prepare("SELECT `Username` FROM `user` WHERE `Email` = ?");
         $createCheck->bind_param("s", $email);
@@ -68,7 +70,22 @@
         }
 
 
-
+    //making sure account doesnt already have password
+	    $existing_pass= '';
+	    $passCheck = $conn->prepare("SELECT Password FROM user WHERE email = ?");
+        $passCheck->bind_param("s", $email);
+        $passCheck->execute();
+        $passCheck->store_result();
+	    $passCheck->bind_result($existing_pass);
+	
+	
+	
+	IF (strlen($existing_pass) > 0){
+		ECHO "ERROR: it appears this account is already signed up";
+		exit();
+	}else{
+		
+		
 
 
         //need to check if username is unique
@@ -78,11 +95,12 @@
         $userCheck->execute();
         $userCheck->store_result();
 
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         //update database row with username and password 
         $sql_update = ("UPDATE `user` SET `Username` = ?, `Password` = ? WHERE `email` = ?");
         $stmt = $con->prepare($sql_update);
-        $stmt->bind_param("sss", $username, $password, $email);
+        $stmt->bind_param("sss", $username, $hashed_password, $email);
 
         //checking if data insertion was executed
         if ( $stmt->execute()) {
