@@ -1,10 +1,6 @@
 <?php
 session_start();
-<<<<<<< HEAD:landingPage.php
 include("admin/config/dbCon.php");
-=======
-include 'dbCON.php';
->>>>>>> 2618c1533293ed3b2c0ad694e344ac7cfe372718:profilepage.php
 
 // Check if user is logged in
 if (!isset($_SESSION['auth'])) {
