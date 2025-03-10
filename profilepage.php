@@ -34,10 +34,13 @@ $user = $result->fetch_assoc();
     <img src="<?= !empty($user['ProfilePicture']) ? htmlspecialchars($user['ProfilePicture']) : 'default.png' ?>" width="150" height="150">
 
    
-    <form action="UserUpload.php" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" accept="image/*" required>
-        <button type="submit" name="UserUpload">Upload</button>
-    </form>
+<form action="upload.php" method="POST" enctype="multipart/form-data" class="mt-3">
+    <input type="file" name="file" class="form-control mb-2" required>
+    
+    <textarea name="bio" class="form-control mb-2" placeholder="Enter your bio or caption..."></textarea>
+    
+    <button type="submit" class="btn btn-primary w-100">Upload File & Bio</button>
+</form>
 
 
 </body>
