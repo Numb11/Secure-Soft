@@ -81,7 +81,7 @@
         $_SESSION["remainingAtt"] = ($attempts - $_SESSION["logAtt"]);
         $_SESSION["login_time_stamp"] = time();
     }else{
-        if ((time()- $_SESSION["login_time_stamp"]) > 300){ //Session should end after 5 minutes
+        if ((time()- $_SESSION["login_time_stamp"]) > 150){ //Session should end after 5 minutes
             echo "Session timeout, please refresh";
             session_unset();
             session_destroy();

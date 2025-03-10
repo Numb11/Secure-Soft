@@ -32,7 +32,7 @@
             $_SESSION["login_time_stamp"] = time();
 
         }else{
-            if ((time()- $_SESSION["login_time_stamp"]) > 300){ //Session should end after 5 minutes, prevention of session hijacking
+            if ((time()- $_SESSION["login_time_stamp"]) > 150){ //Session should end after 5 minutes, prevention of session hijacking
                 echo "Session timeout, please refresh";
                 session_unset();
                 session_destroy();
@@ -61,8 +61,9 @@
                     $stmt->store_result();     
 
                     if($stmt->num_rows == 1 ){
-                        echo "Logged in! Redirect to landing page";
                         $_SESSION["auth"] = True; 
+                        $_SESSION["username"] = $username;
+                        header("Location: ../Secure-Soft/landingPage.php");
                         
 
                     }else{

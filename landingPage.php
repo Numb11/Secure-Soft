@@ -1,14 +1,17 @@
 <?php
 session_start();
-include 'config.php';
+include("admin/config/dbCon.php");
 
 // Check if user is logged in
-if (!isset($_SESSION['UserID'])) {
+if (!isset($_SESSION['auth'])) {
     die("Error: User not logged in.");
 }
 
-$UserID = $_SESSION['UserID'];
-$result = $conn->query("SELECT * FROM user WHERE UserID = $UserID");
+$authenticated = $_SESSION['auth'];
+$username = $_SESSION["username"];
+
+
+$result = $con->query("SELECT * FROM `user` WHERE `Username` = $username");
 
 if ($result->num_rows == 0) {
     die("Error: User not found.");
