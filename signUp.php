@@ -55,6 +55,7 @@
             echo "error: Username is already taken";
             exit();
         }
+    }
 
         
         $dbUsername = '';
@@ -72,7 +73,7 @@
 
     //making sure account doesnt already have password
 	    $existing_pass= '';
-	    $passCheck = $conn->prepare("SELECT Password FROM user WHERE email = ?");
+	    $passCheck = $con->prepare("SELECT 'Password' FROM `user` WHERE `Email` = ?");
         $passCheck->bind_param("s", $email);
         $passCheck->execute();
         $passCheck->store_result();

@@ -10,14 +10,6 @@ if (!isset($_SESSION['auth'])) {
 $authenticated = $_SESSION['auth'];
 $username = $_SESSION["username"];
 
-
-$result = $con->query("SELECT * FROM `user` WHERE `Username` = $username");
-
-if ($result->num_rows == 0) {
-    die("Error: User not found.");
-}
-
-$user = $result->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -31,13 +23,13 @@ $user = $result->fetch_assoc();
 </head>
 <body>
 
-    <h2>Welcome, <?= htmlspecialchars($user['Username']) ?></h2>
+    <h2>Welcome, <?= htmlspecialchars($_SESSION["username"]) ?></h2>
 
    
     <img src="<?= !empty($user['ProfilePicture']) ? htmlspecialchars($user['ProfilePicture']) : 'default.png' ?>" width="150" height="150">
 
    
-<form action="upload.php" method="POST" enctype="multipart/form-data" class="mt-3">
+<form action="UserUpload.php" method="POST" enctype="multipart/form-data" class="mt-3">
     <input type="file" name="file" class="form-control mb-2" required>
     
     <textarea name="bio" class="form-control mb-2" placeholder="Enter your bio or caption..."></textarea>
