@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'config.php';
+include 'dbCON.php';
 
 if (!isset($_SESSION['UserID'])) {
     die("Error: User not logged in.");
