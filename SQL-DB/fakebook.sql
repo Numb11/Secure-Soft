@@ -90,7 +90,7 @@ ALTER TABLE `message`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`UserID`),
   ADD UNIQUE KEY `Username` (`Username`);
-
+  ALTER TABLE user ADD COLUMN Bio TEXT NULL;
 --
 -- Constraints for dumped tables
 --
