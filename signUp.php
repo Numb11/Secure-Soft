@@ -8,7 +8,7 @@
     function validateCred($username, $password)
         {
 
-        $passPatt = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{14,50}$/"; //geeksForGeeks
+        $passPatt = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{14,50}$/"; 
 
 
         if (strlen($username) < 2 || strlen($username) > 25)
