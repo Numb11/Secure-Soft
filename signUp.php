@@ -39,6 +39,8 @@
         $username = trim($_POST["username"]);
         $password = hash("sha256", trim($_POST["password"]));
 
+	    
+
 
         //checking that the email entered is already verified
         $emailCheck = $con->prepare("SELECT `Ver` FROM `user` WHERE `Email` = ?");
@@ -57,7 +59,15 @@
         }
     }
 
-        
+        //function to sanitize data
+
+	 function sanitiseString($str){ //Sanitise input
+            $str = trim($str);
+            $str = stripslashes($str);
+            return $str;
+
+        }
+
         $dbUsername = '';
         $createCheck = $con->prepare("SELECT `Username` FROM `user` WHERE `Email` = ?");
         $createCheck->bind_param("s", $email);
