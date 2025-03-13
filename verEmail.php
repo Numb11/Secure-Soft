@@ -1,6 +1,13 @@
 
 
 <?php
+    function sanitiseString($str){ //Sanitise input
+        $str = trim($str);
+        $str = stripslashes($str);
+        return $str;
+
+    }
+
     function endSess(){
         exit("Attempts remaining: " . $_SESSION["remainingAtt"]);
 
@@ -70,7 +77,7 @@
 
     
                 } else{
-                    echo "Error ". $e->getMessage();
+                    echo "Error, Please retry";
     
                 }
             }
@@ -100,7 +107,7 @@
 
     }
 
-    $email = $_POST["email"];
+    $email = sanitiseString($_POST["email"]);
     authEmail($email);
 
 ?>
