@@ -1,15 +1,19 @@
 <?php
 session_start();
-include 'config.php';
+include("admin/config/dbCon.php");
 
-if (!isset($_SESSION['UserID'])) {
+if (!isset($_SESSION['username']) OR ($_SESSION['username'] == False )) {
     die("Error: User not logged in.");
 }
 
-$UserID = $_SESSION['UserID'];
+
+
+
+$username = $_SESSION["username"];
 $file = $_FILES['file'];
 
-$targetDir = "uploads/";
+
+$targetDir = "../Uploads";
 $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
 $maxFileSize = 2 * 1024 * 1024; // 2MB limit
 
@@ -35,12 +39,12 @@ if ($fileSize > $maxFileSize) {
 
 
 // Move file securely
-if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
+if (move_uploaded_file($file["tmp_name"], $targetDir)) {
     
     // Use prepared statements to prevent SQL injection
-    $sql = "UPDATE user SET ProfilePicture = ? WHERE UserID = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $targetFilePath, $UserID);
+    $sql = "UPDATE user SET ProfilePicture = ? WHERE username = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("si", $targetDir, $username);
 
     if ($stmt->execute()) {
         echo "Profile picture uploaded successfully!";

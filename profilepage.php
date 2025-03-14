@@ -1,15 +1,24 @@
 <?php
 session_start();
-include 'config.php';
+include("admin/config/dbCon.php");
 
-// Check if user is logged in
-if (!isset($_SESSION['UserID'])) {
+
+
+if (!isset($_SESSION['username']) OR ($_SESSION['username'] == False )) {
     die("Error: User not logged in.");
 }
 
-$UserID = $_SESSION['UserID'];
-$result = $conn->query("SELECT * FROM user WHERE UserID = $UserID");
 
+
+$username = $_SESSION["username"];
+
+$stmt = $con->prepare("SELECT * FROM user WHERE Username = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+
+$result = $stmt->get_result();
+$DbR = $result->fetch_assoc();
+$stmt->close();
 if ($result->num_rows == 0) {
     die("Error: User not found.");
 }
@@ -27,7 +36,7 @@ $user = $result->fetch_assoc();
 	</head>
 <body>
 
-    <h2>Welcome, <?= htmlspecialchars($user['Username']) ?></h2>
+    <h2>Welcome, <?= htmlspecialchars($username) ?></h2>
 
    
     <img src="<?= !empty($user['ProfilePicture']) ? htmlspecialchars($user['ProfilePicture']) : 'default.png' ?>" width="150" height="150">
@@ -40,9 +49,14 @@ $user = $result->fetch_assoc();
 	<textarea name= "description" placeholder= "Enter description..." rows="3" cols="50"></textarea>
 	<br>
 	<input type="submit" value="upload">
-    
+
     </form>
 	
+
+    <button onclick="window.location.href='chat.php'">
+    Go to messaging page
+    </button>
+
 
 
 </body>

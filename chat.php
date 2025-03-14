@@ -1,16 +1,18 @@
 <?php
 // Start the session to access the session variables
-session_start();
 
-// Check if the user is logged in (i.e., session variable exists)
-if (!isset($_SESSION['UserID'])) {
-    // Redirect to login page if not logged in
-    header("Location: index.php");
-    exit();
+session_start();
+include("admin/config/dbCon.php");
+
+
+
+if (!isset($_SESSION['username']) OR ($_SESSION['username'] == False )) {
+    die("Error: User not logged in.");
 }
 
-// The logged-in user's ID (sender)
-$sender_id = $_SESSION['UserID']; // Get the sender ID from session
+
+
+$username = $_SESSION["username"];
 
 // Get the receiver ID (from the URL)
 $receiver_id = isset($_GET['RecieverID']) ? (int)$_GET['RecieverID'] : 0; // Ensure it's an integer
