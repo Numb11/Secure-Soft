@@ -2,6 +2,7 @@
 // Start the session to access the session variables
 
 session_start();
+
 include("admin/config/dbCon.php");
 
 
@@ -22,19 +23,12 @@ if ($receiver_id == 0) {
     die("Invalid receiver ID");
 }
 
-// Database connection settings
-$host = '127.0.0.1';
-$username = 'root';
-$password = '';
-$dbname = 'fakebook';
-$port = 3306 ;
 
-// Establish a database connection
-$conn = new mysqli($host, $username, $password, $dbname, 3306);
+
 
 // Check if connection was successful
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
 }
 
 // Handle form submission for sending a message

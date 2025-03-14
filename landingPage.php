@@ -12,7 +12,7 @@
     <nav>
         <ul>
             <li><a href="profilepage.php">See your profile</a></li>
-            
+            <li><a href="chat.php">Start messaging!</a></li>
         </ul>
     </nav>
     
