@@ -36,7 +36,13 @@ $user = $result->fetch_assoc();
     <form action="UserUpload.php" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" accept="image/*" required>
         <button type="submit" name="UserUpload">Upload</button>
+        <br>
+	<textarea name= "description" placeholder= "Enter description..." rows="3" cols="50"></textarea>
+	<br>
+	<input type="submit" value="upload">
+    
     </form>
+	
 
 
 </body>
