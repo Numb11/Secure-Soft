@@ -1,0 +1,27 @@
+<?php
+session_start();
+include 'config.php';
+
+if (!isset($_SESSION['UserID'])) {
+    die("Error: User not logged in.");
+}
+
+$UserID = $_SESSION['UserID'];
+$file = $_FILES['file'];
+
+$targetDir = "uploads/";
+$targetFilePath = $targetDir . basename($file["name"]); 
+$fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+
+// No file type restriction
+// No file size limit
+// No error checks
+
+move_uploaded_file($file["tmp_name"], $targetFilePath); 
+
+$sql = "UPDATE user SET ProfilePicture = '$targetFilePath' WHERE UserID = $UserID";
+$conn->query($sql); // Executing query without sanitization
+
+echo "Profile picture uploaded successfully!";
+echo "<br><a href='profilepage.php'>Go to Profile</a>"; // Link to another page
+?>
