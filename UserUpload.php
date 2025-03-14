@@ -33,9 +33,6 @@ if ($fileSize > $maxFileSize) {
     die("File too large. Maximum allowed size is 2MB.");
 }
 
-// Generate a unique file name
-$newFileName = uniqid("profile_", true) . "." . $fileType;
-$targetFilePath = $targetDir . $newFileName;
 
 // Move file securely
 if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
