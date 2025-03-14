@@ -13,6 +13,7 @@
         <ul>
             <li><a href="profilepage.php">See your profile</a></li>
             <li><a href="chat.php">Start messaging!</a></li>
+            <li><a href="searchhtml.php">Search for friends!</a></li>
         </ul>
     </nav>
     

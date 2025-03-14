@@ -1,27 +1,23 @@
 <?php
 
-$host = '127.0.0.1';  
-$username = 'root';   
-$password = '';  
-$dbname = 'fakebook'; 
-$port = 3306 ;
+session_start();
 
+include("admin/config/dbCon.php");
 
-$conn = new mysqli($host, $username, $password, $dbname, 3306);
 
 // Check if connection was successful
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
 }
 
 // Get the search term from the URL
-$searchTerm = mysqli_real_escape_string($conn, $_GET['searchTerm']); // Sanitize user input
+$searchTerm = mysqli_real_escape_string($con, $_GET['searchTerm']); // Sanitize user input
 
 // SQL query to search the database
 $query = "SELECT * FROM user WHERE Username LIKE '%$searchTerm%'";
 
 // Execute the query
-$result = $conn->query($query);
+$result = $con->query($query);
 
 // Check if there are any results
 if ($result->num_rows > 0) {
