@@ -10,16 +10,15 @@ $UserID = $_SESSION['UserID'];
 $file = $_FILES['file'];
 
 $targetDir = "uploads/";
-$targetFilePath = $targetDir . basename($file["name"]); // Directly using the filename without validation
+$targetFilePath = $targetDir . basename($file["name"]); 
 $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
 
 // No file type restriction
 // No file size limit
 // No error checks
 
-move_uploaded_file($file["tmp_name"], $targetFilePath); // Directly moving the file without validation
+move_uploaded_file($file["tmp_name"], $targetFilePath); 
 
-// Vulnerable SQL query (No prepared statements)
 $sql = "UPDATE user SET ProfilePicture = '$targetFilePath' WHERE UserID = $UserID";
 $conn->query($sql); // Executing query without sanitization
 
