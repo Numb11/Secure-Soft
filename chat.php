@@ -3,17 +3,17 @@
 session_start();
 
 // Check if the user is logged in (i.e., session variable exists)
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['UserID'])) {
     // Redirect to login page if not logged in
-    header("Location: login.php");
+    header("Location: index.php");
     exit();
 }
 
 // The logged-in user's ID (sender)
-$sender_id = $_SESSION['user_id']; // Get the sender ID from session
+$sender_id = $_SESSION['UserID']; // Get the sender ID from session
 
 // Get the receiver ID (from the URL)
-$receiver_id = isset($_GET['receiver_id']) ? (int)$_GET['receiver_id'] : 0; // Ensure it's an integer
+$receiver_id = isset($_GET['RecieverID']) ? (int)$_GET['RecieverID'] : 0; // Ensure it's an integer
 
 // Ensure the receiver ID is valid
 if ($receiver_id == 0) {
@@ -21,13 +21,14 @@ if ($receiver_id == 0) {
 }
 
 // Database connection settings
-$host = 'localhost';
+$host = '127.0.0.1';
 $username = 'root';
-$password = 'root';
+$password = '';
 $dbname = 'fakebook';
+$port = 3306 ;
 
 // Establish a database connection
-$conn = new mysqli($host, $username, $password, $dbname);
+$conn = new mysqli($host, $username, $password, $dbname, 3306);
 
 // Check if connection was successful
 if ($conn->connect_error) {
@@ -35,16 +36,19 @@ if ($conn->connect_error) {
 }
 
 // Handle form submission for sending a message
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['message'])) {
-    $message = mysqli_real_escape_string($conn, $_POST['message']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['Message'])) {
+    $message = $_POST['Message'];
 
-    // Insert the message into the database
-    $query = "INSERT INTO message (SenderID, RecieverID, Content) VALUES ('$sender_id', '$receiver_id', '$message')";
-    if ($conn->query($query) === TRUE) {
+    // Prepare and bind parameters to prevent SQL injection
+    $stmt = $conn->prepare("INSERT INTO message (SenderID, RecieverID, Content) VALUES (?, ?, ?)");
+    $stmt->bind_param("iis", $sender_id, $receiver_id, $message); // 'i' for integer, 's' for string
+
+    if ($stmt->execute()) {
         echo "<p>Message sent successfully!</p>";
     } else {
-        echo "<p>Error: " . $conn->error . "</p>";
+        echo "<p>Error: " . $stmt->error . "</p>";
     }
+    $stmt->close(); // Close the statement after execution
 }
 
 // SQL query to get all messages between the two users
