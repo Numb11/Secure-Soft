@@ -15,7 +15,7 @@
 
 	}
 
-$_SESSION['UserID'] = 1;
+
 ?>
 
 
