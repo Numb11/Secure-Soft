@@ -23,20 +23,8 @@ $user = $result->fetch_assoc();
 
 <head>
     <link rel = "stylesheet" href="log-in.css">
-	<script>
-        function validateForm() {
-            var fileInput = document.getElementById("fileUpload");
-            var allowedExtensions = /\.(jpg|jpeg|png|gif)$/i;
-            if (!allowedExtensions.exec(fileInput.value)) {
-                alert("Invalid file type. Please upload an image file (JPG, JPEG, PNG, GIF).");
-                fileInput.value = "";
-                return false;
-            }
-            return true;
-        }
-    </script>
 	
-</head>
+	</head>
 <body>
 
     <h2>Welcome, <?= htmlspecialchars($user['Username']) ?></h2>
