@@ -1,43 +1,54 @@
-<?php
-session_start();
-include 'config.php';
-
-// Check if user is logged in
-if (!isset($_SESSION['UserID'])) {
-    die("Error: User not logged in.");
-}
-
-$UserID = $_SESSION['UserID'];
-$result = $conn->query("SELECT * FROM user WHERE UserID = $UserID");
-
-if ($result->num_rows == 0) {
-    die("Error: User not found.");
-}
-
-$user = $result->fetch_assoc();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
-    
-	<link rel = "stylesheet" href="log-in.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Page</title>
+    <script>
+        function validateForm() {
+            var fileInput = document.getElementById("fileUpload");
+            var allowedExtensions = /\.(jpg|jpeg|png|gif)$/i;
+            if (!allowedExtensions.exec(fileInput.value)) {
+                alert("Invalid file type. Please upload an image file (JPG, JPEG, PNG, GIF).");
+                fileInput.value = "";
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
-
-    <h2>Welcome, <?= htmlspecialchars($user['Username']) ?></h2>
-
-   
-    <img src="<?= !empty($user['ProfilePicture']) ? htmlspecialchars($user['ProfilePicture']) : 'default.png' ?>" width="150" height="150">
-
-   
-    <form action="UserUpload.php" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" accept="image/*" required>
-        <button type="submit" name="UserUpload">Upload</button>
-    </form>
-
-
+    <header>
+        <h1>Welcome to My Simple Page</h1>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section>
+            <p>This is a simple HTML page with a section for links.</p>
+        </section>
+        
+        <section>
+            <h2>Upload a Profile Picture</h2>
+            <form action="upload.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                <input type="file" name="fileUpload" id="fileUpload" required>
+                <br>
+                <textarea name="description" placeholder="Enter description..." rows="4" cols="50"></textarea>
+                <br>
+                <input type="submit" value="Upload">
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Simple Page</p>
+    </footer>
 </body>
 </html>
