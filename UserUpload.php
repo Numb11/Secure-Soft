@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("admin/config/dbCon.php");
+include 'config.php';
 
 if (!isset($_SESSION['UserID'])) {
     die("Error: User not logged in.");
@@ -8,45 +8,53 @@ if (!isset($_SESSION['UserID'])) {
 
 $UserID = $_SESSION['UserID'];
 $file = $_FILES['file'];
-$bio = trim($_POST['bio']); // Get the bio/caption
 
-// Upload directory
-$uploadDir = __DIR__ . "/uploads/";
-$allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-$allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+$targetDir = "uploads/";
+$allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+$maxFileSize = 2 * 1024 * 1024; // 2MB limit
+
+// Check for upload errors
+if ($file['error'] !== UPLOAD_ERR_OK) {
+    die("Error: File upload failed.");
+}
 
 // Get file details
-$fileName = basename($file["name"]);
-$fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-$fileTmp = $file["tmp_name"];
+$fileType = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
 $fileSize = $file["size"];
-$fileMimeType = mime_content_type($fileTmp);
 
-// Generate a secure file name
-$newFileName = uniqid("profile_", true) . "." . $fileExt;
-$targetFilePath = $uploadDir . $newFileName;
-
-// Security checks
-if (!in_array($fileExt, $allowedExtensions) || !in_array($fileMimeType, $allowedMimeTypes)) {
-    die("Error: Invalid file type.");
-}
-if ($fileSize > 2 * 1024 * 1024) { // 2MB limit
-    die("Error: File too large.");
+// Check file type
+if (!in_array($fileType, $allowedTypes)) {
+    die("Invalid file type. echo <br><a href='profilepage.php'>Go to Profile</a>; Only JPG, JPEG, PNG, and GIF are allowed.");
+	
 }
 
-// Move the file and update the database
-if (move_uploaded_file($fileTmp, $targetFilePath)) {
-    $sql = "UPDATE user SET ProfilePicture = ?, Bio = ? WHERE UserID = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $newFileName, $bio, $UserID);
+// Check file size
+if ($fileSize > $maxFileSize) {
+    die("File too large. Maximum allowed size is 2MB.");
+}
+
+// Generate a unique file name
+$newFileName = uniqid("profile_", true) . "." . $fileType;
+$targetFilePath = $targetDir . $newFileName;
+
+// Move file securely
+if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
     
+    // Use prepared statements to prevent SQL injection
+    $sql = "UPDATE user SET ProfilePicture = ? WHERE UserID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $targetFilePath, $UserID);
+
     if ($stmt->execute()) {
-        header("Location: profile.php"); // Refresh profile page
-        exit();
+        echo "Profile picture uploaded successfully!";
+        echo "<br><a href='profilepage.php'>Go to Profile</a>"; // Link to another page
     } else {
-        die("Database error: " . $stmt->error);
+        echo "Database error: " . $stmt->error;
     }
+    
+    $stmt->close();
 } else {
-    die("Error: Upload failed.");
+    echo "Error moving the uploaded file.";
+	
 }
 ?>
